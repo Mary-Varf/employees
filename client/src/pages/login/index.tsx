@@ -13,9 +13,8 @@ export const Login: React.FC = () => {
             <Row align='middle' justify='center'>
                 <Card title="Ligin" style={{ width: '30rem' }}>
                     <Form onFinish={() =>console.log('finish')}>
-                        <CustomInput name='Name' placeholder='Name' />
-                        <CustomInput name='Email' placeholder='Email' type='email'/>
-                        <CustomPasswordInput name='Password' placeholder='password' />
+                        <CustomInput name='email' placeholder='Email' type='email'/>
+                        <CustomPasswordInput name='password' placeholder='password' />
                         <CustomButton type='primary' htmlType='submit'>Login</CustomButton>
                     </Form>
                     <Space direction='vertical' size='large'>

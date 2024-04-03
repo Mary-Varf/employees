@@ -12,33 +12,44 @@ export const CustomPasswordInput: React.FC<Props> = ({
     name,
     placeholder,
     dependencies,
-                                    }) => {
+}: Props) => {
     return (
         <Form.Item
-            name={ name }
-            dependencies={ dependencies }
-            hasFeedback={ true }
+            name={name}
+            dependencies={dependencies}
+            hasFeedback
             rules={[
-                {required: true, message: 'Required field'},
+                {
+                    required: true,
+                    message: "Required",
+                },
                 ({ getFieldValue }) => ({
                     validator(_, value) {
-                        if (!value) {
+                        if (!value ) {
                             return Promise.resolve();
                         }
-                        if (name == 'confirmPassword' && (!value || getFieldValue('password') === value)){
-                            return Promise.reject(new Error('The two passwords that you entered do not match!'));
+
+                        if (name === 'confirmPassword') {
+                            if (!value || getFieldValue("password") === value) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject(
+                                new Error("Passwords should be identical")
+                            );
+                        } else {
+                            if (value.length < 3) {
+                                return Promise.reject(
+                                    new Error("Not less than 3 symbols")
+                                );
+                            }
+
+                            return Promise.resolve();
                         }
-                        if (value && value < 3) {
-                            return Promise.reject(new Error('Enter at least 3 symbols'));
-                        }
-                    }
-                })
+                    },
+                }),
             ]}
         >
-            <Input.Password
-                placeholder={ placeholder }
-                size={ 'large' }
-            />
+            <Input.Password placeholder={placeholder} size="large" />
         </Form.Item>
     );
-}
+};

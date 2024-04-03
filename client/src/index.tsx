@@ -13,7 +13,7 @@ import { ConfigProvider, theme } from "antd";
 const router = createBrowserRouter([
     {
         path: Paths.home,
-        element: <h1>Home</h1>
+        element: <div></div>,
     },
     {
         path: Paths.login,
