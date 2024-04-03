@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
         res.status(200).json(employees);
     }
     catch (error) {
-        res.status(400).json({ message: "Failed to get employees" });
+        res.status(500).json({ message: "Failed to get employees" });
     }
 }
 
@@ -41,8 +41,76 @@ const add = async (req, res) => {
     }
 };
 
+/**
+ * @route POST /api/employees/remove/:id
+ * @desc  Remove employee by id
+ * @access Private
+ */
+const remove = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await prisma.employee.delete({
+            where: {
+                id,
+            }
+        });
+
+        res.status(204).json({ message: "Ok" });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Failed to delete employee" });
+    }
+}
+
+/**
+ * @route PUT /api/employees/edit/:id
+ * @desc  Edit employee by id
+ * @access Private
+ */
+const edit = async (req, res) => {
+    try {
+        const data = req.body;
+        const { id } = req.params;
+        await prisma.employee.update({
+            where: {
+                id,
+            },
+            data,
+        });
+
+        res.status(204).json({ message: 'Ok' });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Failed to edit employee" });
+    }
+}
+
+
+/**
+ * @route GET /api/employees/:id
+ * @desc  Get employee by id
+ * @access Private
+ */
+const employee = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const employee = await prisma.employee.findUnique({
+            where: {
+                id,
+            },
+        });
+
+        res.status(200).json(employee);
+    }
+    catch (error) {
+        res.status(500).json({ message: "Failed to get employee" });
+    }
+}
 
 module.exports = {
     getAll,
     add,
+    edit,
+    remove,
+    employee
 }
