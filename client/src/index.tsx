@@ -9,11 +9,15 @@ import { Paths } from "./paths";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { ConfigProvider, theme } from "antd";
+import { Auth } from "./features/auth/auth";
+import { Employees } from "./pages/employees";
+import { AddEmployee } from "./pages/addEmployee";
+import {Status} from "./pages/status";
 
 const router = createBrowserRouter([
     {
         path: Paths.home,
-        element: <div></div>,
+        element: <Employees />,
     },
     {
         path: Paths.login,
@@ -22,6 +26,14 @@ const router = createBrowserRouter([
     {
         path: Paths.register,
         element: <Register />,
+    },
+    {
+        path: Paths.employeeAdd,
+        element: <AddEmployee />,
+    },
+    {
+        path: `${Paths.status}/:status`,
+        element: <Status />,
     },
 ]);
 
@@ -34,7 +46,9 @@ root.render(
         <ConfigProvider theme={{
             algorithm: theme.darkAlgorithm
         }}>
-            <RouterProvider router={ router } />
+            <Auth>
+                <RouterProvider router={ router } />
+            </Auth>
         </ConfigProvider>
     </Provider>
   </React.StrictMode>
